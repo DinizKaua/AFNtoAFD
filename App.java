@@ -1,55 +1,55 @@
-import java.util.ArrayList; 
-import java.util.List;
-import java.util.Scanner;
-
-import Estrutura.AFN;
+import java.util.*;
+import Estrutura.*;
 
 public class App {
+
     public static void main(String[] args) {
+
         Scanner scan = new Scanner(System.in);
 
-        System.out.println("=================================================");
-        // estados
-        System.out.println("Informe os estados do automato:");
-        String entrada_estados = scan.nextLine();
-        String [] estados_split = entrada_estados.split(", ");
-        int [] estadosInt = new int[estados_split.length];
-        for(int i = 0; i < estadosInt.length; i++){
-            estadosInt[i] = Integer.parseInt(estados_split[i]);
+        // 1) ESTADOS DO AUTOMATO
+        System.out.println("Informe os estados do AFN (ex: 0, 1, 2, 3):");
+        String[] partesEstados = scan.nextLine().split(", ");
+        int[] listaEstados = new int[partesEstados.length];
+        for(int i = 0; i < partesEstados.length; i++){
+            listaEstados[i] = Integer.parseInt(partesEstados[i]);
         }
 
-        // estado incial
-        System.out.println("Informe o estado incial:");
-        int estadoIncial = scan.nextInt();
+        // 2) ESTADO INICIAL
+        System.out.println("Informe o estado inicial (ex: 0):");
+        int estadoInicial = Integer.parseInt(scan.nextLine());
 
-        scan.nextLine();
+        // 3) ESTADOS FINAIS
+        System.out.println("Informe os estados finais (ex: 2, 3):");
+        String[] partesFinais = scan.nextLine().split(", ");
+        int[] estadosFinais = new int[partesFinais.length];
+        for(int i = 0; i < partesFinais.length; i++){
+            estadosFinais[i] = Integer.parseInt(partesFinais[i]);
+        }
 
-        // transicoes
-        System.out.println("Informe a funcao programa:");
-        List<String> lista_transicoes = new ArrayList<>();
-        String transicao = "";
+        // 4) TRANSIÇÕES
+        System.out.println("Informe as transições (ex: 0a2), uma por linha. Digite 'fim' para terminar:");
+        List<String> listaTransicoes = new ArrayList<>();
         while(true){
-            transicao = scan.nextLine();
-            if(transicao.equals("fim")){
-                break;
-            }
-            lista_transicoes.add(transicao);
+            String t = scan.nextLine();
+            if(t.equalsIgnoreCase("fim")) break;
+            if(!t.isEmpty()) listaTransicoes.add(t);
         }
-        String [] arrayTransicoes = lista_transicoes.toArray(new String[0]);
+        String[] transicoes = listaTransicoes.toArray(new String[0]);
 
-        // estados finais
-        System.out.println("Informe os estados finais:");
-        String entrada_estadosFinais = scan.nextLine();
-        String [] estadosFinais_split = entrada_estadosFinais.split(", ");
-        int [] estadosFinaisInt = new int[estadosFinais_split.length];
-        for(int i = 0; i < estadosFinaisInt.length; i++){
-            estadosFinaisInt[i] = Integer.parseInt(estadosFinais_split[i]);
-        }
+        // 5) ALFABETO
+        System.out.println("Informe o alfabeto (ex: a b):");
+        String[] alfabeto = scan.nextLine().split(" ");
 
+        // CONSTRUÇÃO DO AFN
         AFN afn = new AFN();
-        afn.addEstados(estadoIncial, estadosInt, estadosFinaisInt);
-        afn.preencherTransicoes(arrayTransicoes);
+        afn.addEstados(estadoInicial, listaEstados, estadosFinais);
+        afn.preencherTransicoes(transicoes);
+
+        // CONVERSÃO E IMPRESSÃO
+        ConvertAFNtoAFD conversor = new ConvertAFNtoAFD();
+        conversor.converter(afn, alfabeto);
 
         scan.close();
-    } 
+    }
 }

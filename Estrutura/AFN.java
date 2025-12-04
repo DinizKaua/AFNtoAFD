@@ -3,56 +3,59 @@ package Estrutura;
 import java.util.*;
 
 public class AFN {
-    private Estado estadoIncial;
+    private Estado estadoInicial;
     private Set<Estado> estados;
+    private Map<Integer, Estado> mapaEstados;
 
     public AFN(){
         this.estados = new HashSet<>();
-        this.estadoIncial = null;
+        this.mapaEstados = new HashMap<>();
+        this.estadoInicial = null;
     }
 
-    public void addEstados(int estadoIncial, int [] lista_estados, int [] estados_finais){
-        for(int i : lista_estados){
-            Estado estado = new Estado(i, ehFinal(i, estados_finais));
-            if(i == estadoIncial){ 
-                this.estadoIncial = estado;
+    public void addEstados(int estadoIncialId, int [] lista_estados, int [] estados_finais){
+        for(int id : lista_estados){
+
+            boolean ehFinal = contains(estados_finais, id); // verifca se é final
+            Estado e = new Estado(id, ehFinal); // cria
+            estados.add(e); // adiciona ao conjunto de estados
+            mapaEstados.put(id, e); // adiciona ao mapeamento por id
+
+            // verifica se é inical
+            if(id == estadoIncialId){
+                this.estadoInicial = e;
             }
-            estados.add(estado);
         }
     }
 
     public void preencherTransicoes(String[] transcioes){
-        int idOrigem;
-        String simbolo;
-        int idDestino;
-        Estado estado_destino;
-        Estado estado_origem;
+
         for(String s : transcioes){
-            idOrigem = Character.getNumericValue(s.charAt(0));
-            simbolo = String.valueOf(s.charAt(1));
-            idDestino = Character.getNumericValue(s.charAt(2));
+            // pega o id de cada transciao
+            int idOrigem = Character.getNumericValue(s.charAt(0));
+            String simbolo = String.valueOf(s.charAt(1));
+            int idDestino = Character.getNumericValue(s.charAt(2));
 
-            estado_origem = buscarEstados(idOrigem);
-            estado_destino = buscarEstados(idDestino);
+            // converte para estado
+            Estado origem = mapaEstados.get(idOrigem);
+            Estado destino = mapaEstados.get(idDestino);
 
-            if(estado_origem != null && estado_destino != null){
-                estado_origem.addTransicao(simbolo, estado_destino);
-            }
+            // add a transicao
+            origem.addTransicao(simbolo, destino);
         }
     }
 
-    private Estado buscarEstados(int id){
-        for(Estado e : this.estados){
-            if(e.getNome() == id){
-                return e;
-            }
-        }
-        return null;
+    public Estado getEstadoInicial(){
+        return estadoInicial;
+    }
+
+    public Set<Estado> getEstados(){
+        return estados;
     }
     
-    private boolean ehFinal(int i, int[] estados_finais){
-        for(int j : estados_finais){
-            if(i == j) return true;
+    private boolean contains(int[] array, int value){
+        for(int v : array){
+            if(v == value) return true;
         }
         return false;
     }

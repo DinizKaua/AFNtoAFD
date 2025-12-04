@@ -24,7 +24,20 @@ public class Estado {
         }
     }
 
+    @Override
+    public boolean equals(Object o){
+        if (this == o) return true;
+        if (!(o instanceof Estado)) return false;
+        Estado outro = (Estado) o;
+        return this.nome == outro.nome;
+    }
+
+    @Override
+    public int hashCode(){
+        return Integer.hashCode(nome);
+    }
+
     public int getNome(){return this.nome;}
     public boolean getEhFinal(){return this.ehFinal;}
-    public Map<String, Set<Estado>> getTransicoes (){return this.transicoes;}
+    public Map<String, Set<Estado>> getTransicoes (){return Collections.unmodifiableMap(transicoes);}
 }
