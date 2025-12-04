@@ -13,6 +13,7 @@ public class AFN {
         this.estadoInicial = null;
     }
 
+    // adiciona um estado ao conjunto afn
     public void addEstados(int estadoIncialId, int [] lista_estados, int [] estados_finais){
         for(int id : lista_estados){
 
@@ -28,6 +29,7 @@ public class AFN {
         }
     }
 
+    // com os estados ja preenchidos, só ligar eles (add transicoes)
     public void preencherTransicoes(String[] transcioes){
 
         for(String s : transcioes){
@@ -45,6 +47,7 @@ public class AFN {
         }
     }
 
+    // funcoes auxiliares
     public Estado getEstadoInicial(){
         return estadoInicial;
     }

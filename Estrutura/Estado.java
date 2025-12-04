@@ -5,7 +5,7 @@ import java.util.*;
 public class Estado {
     private int nome;
     private boolean ehFinal;
-    private Map<String, Set<Estado>> transicoes;
+    private Map<String, Set<Estado>> transicoes; // conjunto de transicoes para cada estado
 
     public Estado(int nome, boolean ehFinal){
         this.nome = nome;
@@ -13,6 +13,7 @@ public class Estado {
         this.transicoes = new HashMap<>(); 
     }
 
+    // adiciona uma transicao
     public void addTransicao(String simbolo, Estado destino){
         if(transicoes.containsKey(simbolo)){
             transicoes.get(simbolo).add(destino);
@@ -24,6 +25,7 @@ public class Estado {
         }
     }
 
+    // funcoes auxiliares
     @Override
     public boolean equals(Object o){
         if (this == o) return true;

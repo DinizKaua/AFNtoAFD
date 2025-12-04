@@ -14,7 +14,7 @@ public class AFD {
         }
     }
 
-    // verifica se algum estado é final
+    // Verifica se possui algum final no conjunto
     public boolean possuiFinal() {
         for (Estado e : conjunto) {
             if (e.getEhFinal()) return true;
@@ -22,6 +22,7 @@ public class AFD {
         return false;
     }
 
+    // funcoes auxiliares
     public Set<Estado> getConjunto(){
         return conjunto;
     }
