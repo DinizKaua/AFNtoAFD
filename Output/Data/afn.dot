@@ -1,0 +1,11 @@
+digraph AFN {
+rankdir=LR;
+0 [shape=doublecircle];
+0 -> 2 [label="a"];
+0 -> 3 [label="a"];
+1 [shape=circle];
+1 -> 0 [label="b"];
+2 [shape=circle];
+2 -> 1 [label="b"];
+3 [shape=doublecircle];
+}

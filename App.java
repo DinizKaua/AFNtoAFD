@@ -1,5 +1,7 @@
 import java.util.*;
 import Estrutura.*;
+import Output.ImageViewer;
+import Output.*;
 
 public class App {
 
@@ -58,9 +60,20 @@ public class App {
         afn.addEstados(estadoInicial, listaEstados, estadosFinais);
         afn.preencherTransicoes(transicoes);
 
-        // CONVERSÃO E IMPRESSÃO
+        // CONVERSÃO
         ConvertAFNtoAFD conversor = new ConvertAFNtoAFD();
-        conversor.converter(afn, alfabeto);
+        ConversionResult result = conversor.converter(afn, alfabeto);
+
+        // EXPORTA AFN
+        GraphvizzExporter.exportAFN(afn.getEstados(), "Output/Data/afn.dot");
+        GraphvizzExporter.gerarPNG("Output/Data/afn.dot", "Output/Data/afn.png");
+
+        // EXPORTA AFD
+        GraphvizzExporter.exportAFD(result.estadosAFD, result.tabela, "Output/Data/afd.dot");
+        GraphvizzExporter.gerarPNG("Output/Data/afd.dot", "Output/Data/afd.png");
+
+        // MOSTRA NA TELA
+        ImageViewer.showSideBySide("Output/Data/afn.png", "Output/Data/afd.png");
 
         scan.close();
     }
