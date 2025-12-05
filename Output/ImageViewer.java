@@ -3,28 +3,42 @@ package Output;
 import javax.swing.*;
 import java.awt.*;
 
-
 public class ImageViewer {
-    public static void showSideBySide(String img1, String img2) {
+
+    public static void showStacked(String imgTop, String imgBottom) {
 
         JFrame frame = new JFrame("AFN e AFD");
+        
+        // agora 2 linhas e 1 coluna 
+        frame.setLayout(new GridLayout(2, 1));
 
-        // layout horizontal
-        frame.setLayout(new GridLayout(1, 2));
+        // carregar imagens
+        ImageIcon iconTop = new ImageIcon(imgTop);
+        ImageIcon iconBottom = new ImageIcon(imgBottom);
 
-        // cria os labels das imagens
-        JLabel left = new JLabel(new ImageIcon(img1));
-        JLabel right = new JLabel(new ImageIcon(img2));
+        // labels
+        JLabel topLabel = new JLabel(iconTop);
+        JLabel bottomLabel = new JLabel(iconBottom);
 
-        // centraliza
-        left.setHorizontalAlignment(JLabel.CENTER);
-        right.setHorizontalAlignment(JLabel.CENTER);
+        topLabel.setHorizontalAlignment(JLabel.CENTER);
+        bottomLabel.setHorizontalAlignment(JLabel.CENTER);
 
-        // adiciona no frame
-        frame.add(left);
-        frame.add(right);
+        // cada uma dentro de um JScrollPane
+        JScrollPane scrollTop = new JScrollPane(topLabel);
+        JScrollPane scrollBottom = new JScrollPane(bottomLabel);
 
-        frame.pack();
+        scrollTop.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollTop.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+
+        scrollBottom.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollBottom.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+
+        // colocar no frame
+        frame.add(scrollTop);
+        frame.add(scrollBottom);
+
+        // tamanho inicial da janela
+        frame.setSize(1200, 1000);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);

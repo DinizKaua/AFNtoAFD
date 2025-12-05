@@ -44,7 +44,7 @@ public class GraphvizzExporter {
     // Chama o Graphviz para gerar PNG
     public static void gerarPNG(String dotArquivo, String pngArquivo) {
         try {
-            ProcessBuilder pb = new ProcessBuilder("dot", "-Tpng", "-Gdpi=200", dotArquivo, "-o", pngArquivo);
+            ProcessBuilder pb = new ProcessBuilder("dot", "-Tpng", "-Gdpi=130", dotArquivo, "-o", pngArquivo);
 
             pb.inheritIO();
             pb.start();

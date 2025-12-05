@@ -73,7 +73,7 @@ public class App {
         GraphvizzExporter.gerarPNG("Output/Data/afd.dot", "Output/Data/afd.png");
 
         // MOSTRA NA TELA
-        ImageViewer.showSideBySide("Output/Data/afn.png", "Output/Data/afd.png");
+        ImageViewer.showStacked("Output/Data/afn.png", "Output/Data/afd.png");
 
         scan.close();
     }
